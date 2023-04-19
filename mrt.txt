@@ -1,0 +1,57 @@
++-------------------+           +----------------+        +----------------------+
+|      Station      |           |     Train      |        |        Ticket        |
++-------------------+           +----------------+        +----------------------+
+|  -id: int         |           |  -id: int      |        |  -id: int            |
+|  -name: string    |           |  -capacity: int|        |  -price: float       |
+|  -location: string|           |  -route: Route |        |  -departure_time: Time|
+|                   |           |                |        |  -arrival_time: Time  |
+|  +getSchedule(): Schedule |   |+getCurrentStation():Station | | |
+|  +getRoutes(): List<Route>|   |  +getCapacity(): int |        |                      |
++---------------------------+   |  +getRoute(): Route   |        |                      |
+                                 |  +move(): void         |        |                      |
+                                 +------------------------+        +----------------------+
+                                         /       \                        /           \
+                                      /             \                    /             \
+                           +----------------+  +----------------+      /               \
+                           |      Route       |  |      Time       |   /                  \
+                           +----------------+  +----------------+ +------------------+  +------------------+
+                           |  -id: int      |  |  -hour: int   |    |      SingleTrip   |  |      WeeklyPass   |
+                           |  -stations: List<Station>|  |  -minute: int |   +------------------+  +------------------+
+                           |                |  +getHour(): int|    |  -validity: int   |  |  -validity: int   |
+                           |  +getStations(): List<Station> |  |  +getMinute(): int|  |  +getPrice(): float|
+                           |  +getLength(): int|     |  +setTime(int, int): void |  |  +getValidity(): int|
+                           |  +getStationById(int): Station |   +------------------+  |  +setValidity(int): void|
+                           +----------------+      +----------------------------------+
+
+
+(a) Use case diagram:
+
+MRT application use case diagram
+
+The actors in the MRT application are the administrator and the commuter. The use cases are "Add station", "Add line", "Display all stations on a line", "Display station information", "Search for route and price", "Search for shortest route and price", and "Search for up to 3 routes and their respective price and distance". The relationships between the use cases and actors are shown in the diagram.
+
+(b) Ambiguous/incomplete/incorrect/inconsistent requirements:
+
+The requirement states that a commuter is not charged when entering and exiting from the same station, but it doesn't specify how this will be implemented in the system. Will the system detect that the same station was used for both boarding and alighting, or will the commuter have to manually indicate this?
+The requirement states that the fare for a route that includes two or more lines is calculated based on the sum of the fare on each line, but it doesn't specify how to handle the case where an interchange is involved. If the commuter has to switch lines at an interchange, how will the fare be calculated?
+Non-functional requirements:
+
+The system should be able to handle a large number of stations, lines, and interchanges.
+The system should have a fast response time to provide a good user experience.
+The system should have secure data storage and transfer to protect the commuter's personal and financial information.
+(c) Class description and diagram:
+
+MRT application class diagram
+
+Classes:
+
+Station: attributes include station code, name, previous station, next station, distance from previous station, and distance to next station.
+Line: attributes include line name and list of stations on the line.
+Interchange: attributes include interchange name and list of stations in the interchange.
+Fare: attributes include ceiling distance and corresponding charge.
+Hierarchical relationships:
+
+Line has many Stations
+Interchange has many Stations
+Station has one previous Station and one next Station
+(d) I would prefer to use the agile software development process model to develop the MRT application. This is because the requirements may change or become more detailed as the project progresses, and agile allows for flexibility and adaptability to changing requirements. In addition, agile emphasizes collaboration and communication between team members and stakeholders, which is important for a project that involves both administrators and commuters. The iterative nature of agile also allows for testing and feedback throughout the development process, which can lead to a better quality product.
